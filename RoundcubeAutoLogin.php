@@ -33,7 +33,7 @@ class RoundcubeAutoLogin
      *
      * @returns The cookies you should set with setcookie
      */
-    public function login($email, $password)
+    public function login($email, $password, $host)
     {
         try
         {
@@ -51,7 +51,8 @@ class RoundcubeAutoLogin
                 '_timezone' => '',
                 '_url' => '_task=login',
                 '_user' => $email,
-                '_pass' => $password
+                '_pass' => $password,
+                '_host' => $host
             );
 
             $ch = curl_init($this->_rc_link . '?_task=login');
@@ -142,11 +143,12 @@ class RoundcubeAutoLogin
 // send parameters with post, its more secure because username and password not shown in browser and logfile
 $rcuser=$_REQUEST['rc_user'];
 $rcpass=$_REQUEST['rc_pass'];
+$rchost=$_REQUEST['rc_host'];
 
 
 // set your roundcube domain path
 $rc = new RoundcubeAutoLogin('http://domain.com/roundcube/');
-$cookies = $rc->login($rcuser, $rcpass);
+$cookies = $rc->login($rcuser, $rcpass, $rchost);
 
 // now you can set the cookies with setcookie php function, or using any other function of a framework you are using
 foreach($cookies as $cookie_name => $cookie_value)
